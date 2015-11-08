@@ -240,16 +240,18 @@ module.exports = function (grunt) {
     },
 
     // Renames files for browser caching purposes
-    rev: {
+    filerev: {
+      options: {
+        algorithm: 'md5',
+        length: 8
+      },
       dist: {
-        files: {
           src: [
             '<%= projectRoot.dist %>/public/{,*/}*.js',
             '<%= projectRoot.dist %>/public/{,*/}*.css',
             '<%= projectRoot.dist %>/public/assets/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
             '<%= projectRoot.dist %>/public/assets/fonts/*'
-          ]
-        }
+        ]
       }
     },
 
@@ -257,20 +259,25 @@ module.exports = function (grunt) {
     // concat, minify and revision files. Creates configurations in memory so
     // additional tasks can operate on them
     useminPrepare: {
+      //html: ['<%= projectRoot.client %>/mainApp/index.html'],
       mainApp: {
         type: 'html',
-        src: ['<%= projectRoot.client %>/mainApp/index.html']
+        src: ['<%= projectRoot.client %>/mainApp/index.html'],
+        dest: '<%= projectRoot.dist %>/public/mainApp'
       },
       adminApp: {
         type: 'html',
-        src: ['<%= projectRoot.client %>/adminApp/index.html']
+        src: ['<%= projectRoot.client %>/adminApp/index.html'],
+        dest: '<%= projectRoot.dist %>/public/mainApp'
       },
       editorApp: {
         type: 'html',
-        src: ['<%= projectRoot.client %>/editorApp/index.html']
+        src: ['<%= projectRoot.client %>/editorApp/index.html'],
+        dest: '<%= projectRoot.dist %>/public/mainApp'
       },
       options: {
-        dest: '<%= projectRoot.dist %>/public'
+        dest: '<%= projectRoot.dist %>/public',
+        root:  '<%= projectRoot %>'
       }
     },
 
@@ -342,18 +349,43 @@ module.exports = function (grunt) {
           removeRedundantAttributes: true,
           removeScriptTypeAttributes: true,
           removeStyleLinkTypeAttributes: true
-        },
-        usemin: 'app/app.js'
+        }
       },
-      main: {
+      mainMainApp: {
         cwd: '<%= projectRoot.client %>',
-        src: ['{adminApp,editorApp,mainApp,components}/**/*.html'],
-        dest: '.tmp/templates.js'
+        src: ['{mainApp,components,shared}/**/*.html'],
+        dest: '.tmp/mainApp/main-templates.js',
+        usemin: 'mainApp/app.js'
       },
-      tmp: {
+      tmpMainApp: {
         cwd: '.tmp',
-        src: ['{adminApp,editorApp,mainApp,components}/**/*.html'],
-        dest: '.tmp/tmp-templates.js'
+        src: ['{mainApp,components,shared}/**/*.html'],
+        dest: '.tmp/mainApp/tmp-main-templates.js',
+        usemin: 'mainApp/app.js'
+      },
+      mainEditorApp: {
+        cwd: '<%= projectRoot.client %>',
+        src: ['{editorApp,components,shared}/**/*.html'],
+        dest: '.tmp/editorApp/editor-templates.js',
+        usemin: 'editorApp/app.js'
+      },
+      tmpEditorApp: {
+        cwd: '.tmp',
+        src: ['{editorApp,components,shared}/**/*.html'],
+        dest: '.tmp/editorApp/tmp-editor-templates.js',
+        usemin: 'editorApp/app.js'
+      },
+      mainAdminApp: {
+        cwd: '<%= projectRoot.client %>',
+        src: ['{adminApp,components,shared}/**/*.html'],
+        dest: '.tmp/adminApp/admin-templates.js',
+        usemin: 'adminApp/app.js'
+      },
+      tmpAdminApp: {
+        cwd: '.tmp',
+        src: ['{adminApp,components,shared}/**/*.html'],
+        dest: '.tmp/adminApp/ tmp-admin-templates.js',
+        usemin: 'adminApp/app.js'
       }
     },
 
@@ -475,7 +507,7 @@ module.exports = function (grunt) {
       dist: [
         'jade',
         'sass',
-        'imagemin',
+        //'imagemin',
         'svgmin'
       ]
     },
@@ -675,7 +707,9 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('serve', function (target) {
+    grunt.log.writeln('target -->' + target);
     if (target === 'dist') {
+      grunt.log.writeln('Running DIST!');
       return grunt.task.run(
         ['build', 'env:all', 'env:prod', 'express:prod', 'wait', 'open', 'express-keepalive']);
     }
@@ -770,9 +804,21 @@ module.exports = function (grunt) {
     'cdnify',
     'cssmin',
     'uglify',
-    'rev',
+    'filerev',
     'usemin'
   ]);
+
+  grunt.registerTask('serveDist', function () {
+    grunt.log.writeln('Running DIST!');
+    return grunt.task.run(
+      ['build', 'env:all', 'env:prod', 'express:prod', 'wait', 'open', 'express-keepalive']);
+  });
+
+  grunt.registerTask('currPath', function () {
+    var xx = require('./bower.json').appPath;
+    var xy = this.appPath;
+    grunt.log.writeln('Current path -->' + xy);
+  });
 
   grunt.registerTask('default', [
     'newer:jshint',

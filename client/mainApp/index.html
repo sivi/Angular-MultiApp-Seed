@@ -11,11 +11,11 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <!-- build:css(client/mainApp) mainApp/vendor.css -->
+    <!-- build:css(client) mainApp/vendor.css -->
       <!-- bower:css -->
       <!-- endbower -->
     <!-- endbuild -->
-    <!-- build:css({.tmp,client/mainApp}) mainApp/app.css -->
+    <!-- build:css({.tmp,client}) mainApp/app.css -->
     <link rel="stylesheet" href="mainApp/app.css">
       <!-- injector:css -->
       <!-- endinjector -->
@@ -44,9 +44,11 @@
     <script src="bower_components/es5-shim/es5-shim.js"></script>
     <script src="bower_components/json3/lib/json3.min.js"></script>
     <![endif]-->
-    <!-- build:js({client/mainApp,node_modules}) mainApp/vendor.js -->
+    <!-- build:js({client/mainApp/,node_modules}) mainApp/vendor.js -->
       <!-- bower:js -->
+      <script src="../bower_components/es5-shim/es5-shim.js"></script>
       <script src="../bower_components/angular/angular.js"></script>
+      <script src="../bower_components/json3/lib/json3.js"></script>
       <script src="../bower_components/angular-resource/angular-resource.js"></script>
       <script src="../bower_components/angular-cookies/angular-cookies.js"></script>
       <script src="../bower_components/angular-sanitize/angular-sanitize.js"></script>
@@ -57,7 +59,7 @@
     <!-- endbuild -->
 
 
-        <!-- build:js({.tmp,client/mainApp}) mainApp/app.js -->
+        <!-- build:js({.tmp,client}) mainApp/app.js -->
 
         <script src="mainApp/app.js"></script>
           <script src="shared/account/account.js"></script>
