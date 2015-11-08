@@ -3,7 +3,7 @@
 angular.module('buildTestApp')
   .config(function ($routeProvider) {
     $routeProvider
-      .when('/admin', {
+      .when('/adminApp', {
         templateUrl: 'adminApp/admin/admin.html',
         controller: 'AdminCtrl'
       });

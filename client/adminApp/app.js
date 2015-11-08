@@ -1,34 +1,35 @@
 (function() {
   'use strict';
-/*
-    Admin App
- */
+  /*
+      Admin App
+   */
   angular.module('buildTestApp', [
-    'ngCookies',
-    'ngResource',
-    'ngSanitize',
-    'ngRoute',
-    //'btford.socket-io',
-    'ui.bootstrap'
-  ]);
+   'ngCookies',
+   'ngResource',
+   'ngSanitize',
+   'ngRoute'
+ ]);
 
   angular.module('buildTestApp').
     config(function ($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider.
-      when('/mainApp', { // redirect outside of current app
-        // http://stackoverflow.com/questions/19321765
-        // /using-routeprovider-to-redirect-to-routes-outside-of-angular
-        controller: function() {
-          window.location.replace('/mainApp');
-        }}).
-      when('/editorApp', { // redirect outside of current app
-        // http://stackoverflow.com/questions/19321765
-        // /using-routeprovider-to-redirect-to-routes-outside-of-angular
-        controller: function() {
-          window.location.replace('/editorApp');
-        }}).
       otherwise({
-        redirectTo: '/'
+        // while it may look idiotic, it was only way to work around ngRoute. Idea came from
+        // http://stackoverflow.com/questions/19321765/using-routeprovider-to-redirect-to-routes-outside-of-angular
+        controller : function() {
+          var path = window.location.href;
+          var target = window.location.protocol + '//' + window.location.host;
+          if (path === (target + '/mainApp')) {
+            window.location.replace(window.location.protocol + '/mainApp');
+          }
+          else if (path === (target + '/editorApp')) {
+            window.location.replace(window.location.protocol + '/editorApp');
+          }
+          else {
+            window.location.replace('/');
+          }
+        },
+        template : '<div></div>'
       });
 
     $locationProvider.html5Mode(true);

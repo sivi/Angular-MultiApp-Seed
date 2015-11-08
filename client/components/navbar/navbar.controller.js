@@ -1,24 +1,24 @@
 'use strict';
 
 angular.module('buildTestApp')
-  .controller('NavbarCtrl', function ($scope, $location, Auth) {
+  .controller('NavbarCtrl', function ($scope, $location, Auth, $window) {
     var vm = this;
-
+    var host = window.location.protocol;
     $scope.menu = [{
       'title': 'Home',
-      'link': '/'
+      'link': host + '/'
     },
     {
       'title': 'Admin App',
-      'link': '/adminApp'
+      'link': host + '/adminApp'
     },
     {
       'title': 'Editor App',
-      'link': '/editorApp'
+      'link': host + '/editorApp'
     },
     {
       'title': 'Main App',
-      'link': '/mainApp'
+      'link': host + '/mainApp'
     }];
 
     $scope.isCollapsed = true;

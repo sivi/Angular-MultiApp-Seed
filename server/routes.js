@@ -42,7 +42,7 @@ module.exports = function(app) {
   app.route('/*')
     .get(function(req, res) {
       console.log("route /*  --> /mainApp/index.html");
-      res.sendFile(path.resolve(app.get('appPath') + '/mainApp/index.html'));
+      res.redirect('/mainApp');
     });
 };
 })();
