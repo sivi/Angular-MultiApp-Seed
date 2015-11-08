@@ -625,7 +625,7 @@ module.exports = function (grunt) {
             '<%= projectRoot.client %>/{editorApp,components}/**/*.{scss,sass}',
             '!<%= projectRoot.client %>/editorApp/app.{scss,sass}'
           ],
-          '<%= projectRoot.client %>/app/app.scss': [
+          '<%= projectRoot.client %>/mainApp/app.scss': [
             '<%= projectRoot.client %>/{mainApp,components}/**/*.{scss,sass}',
             '!<%= projectRoot.client %>/mainApp/app.{scss,sass}'
           ]
