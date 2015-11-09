@@ -2,6 +2,14 @@
 'use strict';
 
 module.exports = function (grunt) {
+
+  var appFolders = ['adminApp', 'editorApp', 'mainApp'];
+  // turn on if dump of updates is requiered
+  var verboseConfigUpdates = true;
+
+  grunt.task.loadTasks('./GruntFiles/configs');
+  grunt.task.loadTasks('./GruntFiles/tasks');
+
   var localConfig;
   try {
     localConfig = require('./server/config/local.env');
@@ -32,6 +40,8 @@ module.exports = function (grunt) {
       client: require('./bower.json').appPath || 'client',
       dist: 'dist'
     },
+    projectAppFolders: appFolders,
+    verboseConfigUpdates:verboseConfigUpdates,
     express: {
       options: {
         port: process.env.PORT || 9000
@@ -54,113 +64,12 @@ module.exports = function (grunt) {
       }
     },
     watch: {
-      injectJS: {
-        files: [
-          '<%= projectRoot.client %>/{adminApp,editorApp,mainApp,components,shared}/**/*.js',
-          '!<%= projectRoot.client %>/{adminApp,editorApp,mainApp,components,shared}/**/*.spec.js',
-          '!<%= projectRoot.client %>/{adminApp,editorApp,mainApp,components,shared}/**/*.mock.js',
-          '!<%= projectRoot.client %>/adminApp/app.js',
-          '!<%= projectRoot.client %>/editorApp/app.js',
-          '!<%= projectRoot.client %>/mainApp/app.js'],
-        tasks: ['injector:scripts']
-      },
-      injectCss: {
-        files: [
-          '<%= projectRoot.client %>/{adminApp,editorApp,mainApp,components}/**/*.css'
-        ],
-        tasks: ['injector:css']
-      },
-      mochaTest: {
-        files: ['server/**/*.spec.js'],
-        tasks: ['env:test', 'mochaTest']
-      },
-      jsTest: {
-        files: [
-          '<%= projectRoot.client %>/{adminApp,editorApp,mainApp,components}/**/*.spec.js',
-          '<%= projectRoot.client %>/{adminApp,editorApp,mainApp,components}/**/*.mock.js'
-        ],
-        tasks: ['newer:jshint:all', 'karma']
-      },
-      injectSass: {
-        files: [
-          '<%= projectRoot.client %>/{adminApp,editorApp,mainApp,components}/**/*.{scss,sass}'],
-        tasks: ['injector:sass']
-      },
-      sass: {
-        files: [
-          '<%= projectRoot.client %>/{adminApp,editorApp,mainApp,components}/**/*.{scss,sass}'],
-        tasks: ['sass', 'autoprefixer']
-      },
-      jade: {
-        files: [
-          '<%= projectRoot.client %>/{adminApp,editorApp,mainApp,components,shared}/*',
-          '<%= projectRoot.client %>/{adminApp,editorApp,mainApp,components,shared}/**/*.jade'],
-        tasks: ['jade']
-      },
-      gruntfile: {
-        files: ['Gruntfile.js']
-      },
-      livereload: {
-        files: [
-          '{.tmp,<%= projectRoot.client %>}/{adminApp,editorApp,mainApp,components}/**/*.css',
-          '{.tmp,<%= projectRoot.client %>}/{adminApp,editorApp,mainApp,components}/**/*.html',
-
-          '{.tmp,<%= projectRoot.client %>}/{adminApp,editorApp,mainApp,components}/**/*.js',
-
-          '!{.tmp,<%= projectRoot.client %>}{adminApp,editorApp,mainApp,components}/**/*.spec.js',
-          '!{.tmp,<%= projectRoot.client %>}/{adminApp,editorApp,mainApp,components}/**/*.mock.js',
-          '<%= projectRoot.client %>/assets/images/{,*//*}*.{png,jpg,jpeg,gif,webp,svg}'
-        ],
-        options: {
-          livereload: true
-        }
-      },
-      express: {
-        files: [
-          'server/**/*.{js,json}'
-        ],
-        tasks: ['express:dev', 'wait'],
-        options: {
-          livereload: true,
-          nospawn: true //Without this option specified express won't be reloaded
-        }
-      }
+      // see GruntFiles/configs/gruntConfigWatch.js
     },
-
     // Make sure code styles are up to par and there are no obvious mistakes
     jshint: {
-      options: {
-        jshintrc: '<%= projectRoot.client %>/.jshintrc',
-        reporter: require('jshint-stylish')
-      },
-      server: {
-        options: {
-          jshintrc: 'server/.jshintrc'
-        },
-        src: [
-          'server/**/*.js',
-          '!server/**/*.spec.js'
-        ]
-      },
-      serverTest: {
-        options: {
-          jshintrc: 'server/.jshintrc-spec'
-        },
-        src: ['server/**/*.spec.js']
-      },
-      all: [
-        '<%= projectRoot.client %>/{adminApp,editorApp,mainApp,components}/**/*.js',
-        '!<%= projectRoot.client %>/{adminApp,editorApp,mainApp,components}/**/*.spec.js',
-        '!<%= projectRoot.client %>/{adminApp,editorApp,mainApp,components}/**/*.mock.js'
-      ],
-      test: {
-        src: [
-          '<%= projectRoot.client %>/{adminApp,editorApp,mainApp,components}/**/*.spec.js',
-          '<%= projectRoot.client %>/{adminApp,editorApp,mainApp,components}/**/*.mock.js'
-        ]
-      }
+      // see GruntFiles/configs/gruntConfigJsHint.js
     },
-
     // Empties folders to start fresh
     clean: {
       dist: {
@@ -229,14 +138,7 @@ module.exports = function (grunt) {
 
     // Automatically inject Bower components into the app
     wiredep: {
-      target: {
-        src: ['<%= projectRoot.client %>/adminApp/index.html',
-              '<%= projectRoot.client %>/editorApp/index.html',
-              '<%= projectRoot.client %>/mainApp/index.html'],
-        ignorePath: '<%= projectRoot.client %>/',
-        exclude: [/bootstrap-sass-official/, /bootstrap.js/,
-          '/json3/', '/es5-shim/', /bootstrap.css/, /font-awesome.css/]
-      }
+      // see GruntFiles/configs/gruntConfigWiredep.js
     },
 
     // Renames files for browser caching purposes
@@ -246,12 +148,12 @@ module.exports = function (grunt) {
         length: 8
       },
       dist: {
-          src: [
-            '<%= projectRoot.dist %>/public/{,*/}*.js',
-            '<%= projectRoot.dist %>/public/{,*/}*.css',
-            '<%= projectRoot.dist %>/public/assets/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
-            '<%= projectRoot.dist %>/public/assets/fonts/*'
-        ]
+        src: [
+          '<%= projectRoot.dist %>/public/{,*/}*.js',
+          '<%= projectRoot.dist %>/public/{,*/}*.css',
+          '<%= projectRoot.dist %>/public/assets/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
+          '<%= projectRoot.dist %>/public/assets/fonts/*'
+      ]
       }
     },
 
@@ -259,26 +161,7 @@ module.exports = function (grunt) {
     // concat, minify and revision files. Creates configurations in memory so
     // additional tasks can operate on them
     useminPrepare: {
-      //html: ['<%= projectRoot.client %>/mainApp/index.html'],
-      mainApp: {
-        type: 'html',
-        src: ['<%= projectRoot.client %>/mainApp/index.html'],
-        dest: '<%= projectRoot.dist %>/public/mainApp'
-      },
-      adminApp: {
-        type: 'html',
-        src: ['<%= projectRoot.client %>/adminApp/index.html'],
-        dest: '<%= projectRoot.dist %>/public/mainApp'
-      },
-      editorApp: {
-        type: 'html',
-        src: ['<%= projectRoot.client %>/editorApp/index.html'],
-        dest: '<%= projectRoot.dist %>/public/mainApp'
-      },
-      options: {
-        dest: '<%= projectRoot.dist %>/public',
-        root:  '<%= projectRoot %>'
-      }
+      // see GruntFiles/configs/gruntConfigUseminPrepare.js
     },
 
     // Performs rewrites based on rev and the useminPrepare configuration
@@ -338,55 +221,7 @@ module.exports = function (grunt) {
 
     // Package all the html partials into a single javascript payload
     ngtemplates: {
-      options: {
-        // This should be the name of your apps angular module
-        module: 'buildTestApp',
-        htmlmin: {
-          collapseBooleanAttributes: true,
-          collapseWhitespace: true,
-          removeAttributeQuotes: true,
-          removeEmptyAttributes: true,
-          removeRedundantAttributes: true,
-          removeScriptTypeAttributes: true,
-          removeStyleLinkTypeAttributes: true
-        }
-      },
-      mainMainApp: {
-        cwd: '<%= projectRoot.client %>',
-        src: ['{mainApp,components,shared}/**/*.html'],
-        dest: '.tmp/mainApp/main-templates.js',
-        usemin: 'mainApp/app.js'
-      },
-      tmpMainApp: {
-        cwd: '.tmp',
-        src: ['{mainApp,components,shared}/**/*.html'],
-        dest: '.tmp/mainApp/tmp-main-templates.js',
-        usemin: 'mainApp/app.js'
-      },
-      mainEditorApp: {
-        cwd: '<%= projectRoot.client %>',
-        src: ['{editorApp,components,shared}/**/*.html'],
-        dest: '.tmp/editorApp/editor-templates.js',
-        usemin: 'editorApp/app.js'
-      },
-      tmpEditorApp: {
-        cwd: '.tmp',
-        src: ['{editorApp,components,shared}/**/*.html'],
-        dest: '.tmp/editorApp/tmp-editor-templates.js',
-        usemin: 'editorApp/app.js'
-      },
-      mainAdminApp: {
-        cwd: '<%= projectRoot.client %>',
-        src: ['{adminApp,components,shared}/**/*.html'],
-        dest: '.tmp/adminApp/admin-templates.js',
-        usemin: 'adminApp/app.js'
-      },
-      tmpAdminApp: {
-        cwd: '.tmp',
-        src: ['{adminApp,components,shared}/**/*.html'],
-        dest: '.tmp/adminApp/ tmp-admin-templates.js',
-        usemin: 'adminApp/app.js'
-      }
+      // see GruntFiles/configs/gruntConfigNgTemplates.js
     },
 
     // Replace Google CDN references
@@ -398,69 +233,7 @@ module.exports = function (grunt) {
 
     // Copies remaining files to places other tasks can use
     copy: {
-      dist: {
-        files: [
-          {
-            expand: true,
-            dot: true,
-            cwd: '<%= projectRoot.client %>',
-            dest: '<%= projectRoot.dist %>/public',
-            src: [
-              '*.{ico,png,txt}',
-              '.htaccess',
-              'bower_components/**/*',
-              'assets/images/{,*/}*.{webp}',
-              'assets/fonts/**/*'
-            ]
-          },
-          {
-            expand: true,
-            dot: true,
-            cwd: '<%= projectRoot.client %>/adminApp/',
-            dest: '<%= projectRoot.dist %>/public/adminApp/',
-            src: [
-              'index.html'
-            ]
-          },
-          {
-            expand: true,
-            dot: true,
-            cwd: '<%= projectRoot.client %>/editorApp/',
-            dest: '<%= projectRoot.dist %>/public/editorApp/',
-            src: [
-              'index.html'
-            ]
-          },
-          {
-            expand: true,
-            dot: true,
-            cwd: '<%= projectRoot.client %>/mainApp/',
-            dest: '<%= projectRoot.dist %>/public/mainApp/',
-            src: [
-              'index.html'
-            ]
-          },
-          {
-            expand: true,
-            cwd: '.tmp/images',
-            dest: '<%= projectRoot.dist %>/public/assets/images',
-            src: ['generated/*']
-          },
-          {
-            expand: true,
-            dest: '<%= projectRoot.dist %>',
-            src: [
-              'package.json',
-              'server/**/*'
-            ]
-          }]
-      },
-      styles: {
-        expand: true,
-        cwd: '<%= projectRoot.client %>',
-        dest: '.tmp/',
-        src: ['{adminApp,editorApp,mainApp,components}/**/*.css']
-      }
+      // see GruntFiles/configs/gruntConfigCopy.js
     },
 
     buildcontrol: {
@@ -552,277 +325,26 @@ module.exports = function (grunt) {
 
     // Compiles Jade to html
     jade: {
-      compile: {
-        options: {
-          data: {
-            debug: false
-          }
-        },
-        files: [{
-          expand: true,
-          cwd: '<%= projectRoot.client %>',
-          src: [
-            '{adminApp,editorApp,mainApp,components,shared}/**/*.jade'
-          ],
-          dest: '.tmp',
-          ext: '.html'
-        }]
-      }
+      // see GruntFiles/configs/gruntConfigJade.js
     },
 
     // Compiles Sass to CSS
     sass: {
-      server: {
-        options: {
-          loadPath: [
-            '<%= projectRoot.client %>/bower_components',
-            '<%= projectRoot.client %>/adminApp',
-            '<%= projectRoot.client %>/editorApp',
-            '<%= projectRoot.client %>/mainApp',
-            '<%= projectRoot.client %>/components'
-          ],
-          compass: false
-        },
-        files: {
-          '.tmp/adminApp/app.css' : '<%= projectRoot.client %>/adminApp/app.scss',
-          '.tmp/editorApp/app.css' : '<%= projectRoot.client %>/editorApp/app.scss',
-          '.tmp/mainApp/app.css' : '<%= projectRoot.client %>/mainApp/app.scss'
-        }
-      }
+      // see GruntFiles/configs/gruntConfigSass.js
     },
 
     injector: {
-      options: {
-
-      },
-      // Inject application script files into index.html (doesn't include bower)
-      scripts: {
-        options: {
-          transform: function(filePath) {
-            filePath = filePath.replace('/client/', '');
-            filePath = filePath.replace('/.tmp/', '');
-            return '<script src="' + filePath + '"></script>';
-          },
-          starttag: '<!-- injector:js -->',
-          endtag: '<!-- endinjector -->'
-        },
-        files: {
-          '<%= projectRoot.client %>/adminApp/index.html': [
-               [
-                 '{.tmp,<%= projectRoot.client %>}/{adminApp,components}/**/*.js',
-                 '!{.tmp,<%= projectRoot.client %>}/adminApp/app.js',
-                 '!{.tmp,<%= projectRoot.client %>}/{adminApp,components}/**/*.spec.js',
-                 '!{.tmp,<%= projectRoot.client %>}/{adminApp,components}/**/*.mock.js'
-               ]
-            ],
-
-          '<%= projectRoot.client %>/editorApp/index.html': [
-            [
-              '{.tmp,<%= projectRoot.client %>}/{editorApp,components}/**/*.js',
-              '!{.tmp,<%= projectRoot.client %>}/editorApp/app.js',
-              '!{.tmp,<%= projectRoot.client %>}/{editorApp,components}/**/*.spec.js',
-              '!{.tmp,<%= projectRoot.client %>}/{editorApp,components}/**/*.mock.js'
-            ]
-          ],
-          '<%= projectRoot.client %>/mainApp/index.html': [
-            [
-              '{.tmp,<%= projectRoot.client %>}/{mainApp,components}/**/*.js',
-              '!{.tmp,<%= projectRoot.client %>}/mainApp/app.js',
-              '!{.tmp,<%= projectRoot.client %>}/{mainApp,components}/**/*.spec.js',
-              '!{.tmp,<%= projectRoot.client %>}/{mainApp,components}/**/*.mock.js'
-            ]
-          ],
-        }
-      },
-
-      // Inject component scss into app.scss
-      sass: {
-        options: {
-          transform: function(filePath) {
-            filePath = filePath.replace('/client/adminApp/', '');
-            filePath = filePath.replace('/client/editorApp/', '');
-            filePath = filePath.replace('/client/mainApp/', '');
-            filePath = filePath.replace('/client/components/', '');
-            return '@import \'' + filePath + '\';';
-          },
-          starttag: '// injector',
-          endtag: '// endinjector'
-        },
-        files: {
-          '<%= projectRoot.client %>/adminApp/app.scss': [
-            '<%= projectRoot.client %>/{adminApp,components}/**/*.{scss,sass}',
-            '!<%= projectRoot.client %>/adminApp/app.{scss,sass}'
-          ],
-          '<%= projectRoot.client %>/editorApp/app.scss': [
-            '<%= projectRoot.client %>/{editorApp,components}/**/*.{scss,sass}',
-            '!<%= projectRoot.client %>/editorApp/app.{scss,sass}'
-          ],
-          '<%= projectRoot.client %>/mainApp/app.scss': [
-            '<%= projectRoot.client %>/{mainApp,components}/**/*.{scss,sass}',
-            '!<%= projectRoot.client %>/mainApp/app.{scss,sass}'
-          ]
-        }
-      },
-
-      // Inject component css into index.html
-      css: {
-        options: {
-          transform: function(filePath) {
-            filePath = filePath.replace('/client/', '');
-            filePath = filePath.replace('/.tmp/', '');
-            return '<link rel="stylesheet" href="' + filePath + '">';
-          },
-          starttag: '<!-- injector:css -->',
-          endtag: '<!-- endinjector -->'
-        },
-        files: {
-          '<%= projectRoot.client %>/adminApp/index.html': [
-            '<%= projectRoot.client %>/{adminApp,components}/**/*.css'
-          ],
-          '<%= projectRoot.client %>/editorApp/index.html': [
-            '<%= projectRoot.client %>/{editorApp,components}/**/*.css'
-          ],
-          '<%= projectRoot.client %>/mainApp/index.html': [
-            '<%= projectRoot.client %>/{mainApp,components}/**/*.css'
-          ],
-        }
-      }
+      // see GruntFiles/configs/gruntConfigInjector.js
     },
   });
+  var updateConfig = function(grunt) {
+    grunt.task.run(['ngtemplatesConfig']);
+  };
+  updateConfig(grunt);
 
-  // Used for delaying livereload until after server has restarted
-  grunt.registerTask('wait', function () {
-    grunt.log.ok('Waiting for server reload...');
-
-    var done = this.async();
-
-    setTimeout(function () {
-      grunt.log.writeln('Done waiting!');
-      done();
-    }, 1500);
-  });
-
-  grunt.registerTask('express-keepalive', 'Keep grunt running', function() {
-    this.async();
-  });
-
-  grunt.registerTask('serve', function (target) {
-    grunt.log.writeln('target -->' + target);
-    if (target === 'dist') {
-      grunt.log.writeln('Running DIST!');
-      return grunt.task.run(
-        ['build', 'env:all', 'env:prod', 'express:prod', 'wait', 'open', 'express-keepalive']);
-    }
-
-    if (target === 'debug') {
-      return grunt.task.run([
-        'clean:server',
-        'env:all',
-        'injector:sass',
-        'concurrent:server',
-        'injector',
-        'wiredep',
-        'autoprefixer',
-        'concurrent:debug'
-      ]);
-    }
-
-    grunt.task.run([
-      'clean:server',
-      'env:all',
-      'injector:sass',
-      'concurrent:server',
-      'injector',
-      'wiredep',
-      'autoprefixer',
-      'express:dev',
-      'wait',
-      'open',
-      'watch'
-    ]);
-  });
-
-  grunt.registerTask('server', function () {
-    grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
-    grunt.task.run(['serve']);
-  });
-
-  grunt.registerTask('test', function(target) {
-    if (target === 'server') {
-      return grunt.task.run([
-        'env:all',
-        'env:test',
-        'mochaTest'
-      ]);
-    }
-
-    else if (target === 'client') {
-      return grunt.task.run([
-        'clean:server',
-        'env:all',
-        'injector:sass',
-        'concurrent:test',
-        'injector',
-        'autoprefixer',
-        'karma'
-      ]);
-    }
-
-    else if (target === 'e2e') {
-      return grunt.task.run([
-        'clean:server',
-        'env:all',
-        'env:test',
-        'injector:sass',
-        'concurrent:test',
-        'injector',
-        'wiredep',
-        'autoprefixer',
-        'express:dev',
-        'protractor'
-      ]);
-    }
-
-    else {grunt.task.run([
-      'test:server',
-      'test:client'
-    ]);}
-  });
-
-  grunt.registerTask('build', [
-    'clean:dist',
-    'injector:sass',
-    'concurrent:dist',
-    'injector',
-    'wiredep',
-    'useminPrepare',
-    'autoprefixer',
-    'ngtemplates',
-    'concat',
-    'ngAnnotate',
-    'copy:dist',
-    'cdnify',
-    'cssmin',
-    'uglify',
-    'filerev',
-    'usemin'
-  ]);
-
-  grunt.registerTask('serveDist', function () {
-    grunt.log.writeln('Running DIST!');
-    return grunt.task.run(
-      ['build', 'env:all', 'env:prod', 'express:prod', 'wait', 'open', 'express-keepalive']);
-  });
-
-  grunt.registerTask('currPath', function () {
-    var xx = require('./bower.json').appPath;
-    var xy = this.appPath;
-    grunt.log.writeln('Current path -->' + xy);
-  });
-
-  grunt.registerTask('default', [
-    'newer:jshint',
-    'test',
-    'build'
-  ]);
+  // for tasks see
+  //   GruntFiles/tasks/gruntServeTask.js   : 'serve'
+  //   GruntFiles/tasks/gruntTestTask.js    : 'test'
+  //   GruntFiles/tasks/gruntLibraryTask.js : 'build', 'default', 'express-keepalive', 'wait'
+  //
 };
