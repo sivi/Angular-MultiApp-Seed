@@ -5,14 +5,6 @@
 'use strict';
 module.exports = function (grunt) {
 
-  grunt.registerTask('currPath', function () {
-    var xx = require('../../bower.json').appPath;
-    var xy = this.appPath;
-    var appFolders = grunt.config('projectAppFolders');
-    grunt.log.writeln('Current path -->' + xy);
-    grunt.log.writeln('Apps -->' + JSON.stringify(appFolders));
-  });
-
   // Used for delaying livereload until after server has restarted
   grunt.registerTask('wait', function () {
     grunt.log.ok('Waiting for server reload...');
@@ -43,8 +35,10 @@ module.exports = function (grunt) {
     'injector',
     'wiredep',
     'useminPrepare',
+    'useminFixGeneratedConcatConfig',
     'autoprefixer',
     'ngtemplates',
+    'templatesFixGeneratedConcatConfig',
     'concat',
     'ngAnnotate',
     'copy:dist',

@@ -3,6 +3,7 @@
  */
 
 'use strict';
+
 module.exports = function (grunt) {
   grunt.registerTask('ngtemplatesConfig', function () {
     var appFolders = grunt.config('projectAppFolders');
@@ -31,7 +32,7 @@ module.exports = function (grunt) {
         dest: '.tmp/' + appFolders[i] + '/' + appFolders[i] + '-templates.js',
         usemin: appFolders[i] + '/app.js'
       };
-      configTemplate.options[propertyName] = template;
+      configTemplate[propertyName] = template;
 
       propertyName = appFolders[i] + 'Tmp';
       template = {
@@ -40,13 +41,42 @@ module.exports = function (grunt) {
         dest: '.tmp/' + appFolders[i] + '/tmp-' + appFolders[i] + '-templates.js',
         usemin: appFolders[i] + '/app.js'
       };
-      configTemplate.options[propertyName] = template;
+      configTemplate[propertyName] = template;
     }
 
-    grunt.config('ngtemplates', [configTemplate]);
+    grunt.config('ngtemplates', configTemplate);
     if (verboseConfigUpdates) {
       grunt.log.writeln('Config -->' + JSON.stringify(grunt.config('ngtemplates')));
     }
 
   });
+
+  //
+  //    --------------  fix useminPrepare result
+  //
+  grunt.registerTask('templatesFixGeneratedConcatConfig', function () {
+
+    var path = require('path');
+
+    var verboseConfigUpdates = grunt.config('verboseConfigUpdates');
+    var configTemplate = grunt.config('concat.generated.files');
+    for (var i = 0; i < configTemplate.length; i++) {
+      var entityPairSrc = configTemplate[i].src;
+      var entityPairDest = configTemplate[i].dest;
+      var entryArray = entityPairDest.split(path.sep);
+      if (entryArray[entryArray.length - 1] === 'app.js') {
+        var folderEntry = entryArray[entryArray.length - 2];
+        var srcEntry = '.tmp/' + folderEntry + '/tmp-' + folderEntry + '-templates.js';
+        entityPairSrc.push(srcEntry);
+        srcEntry = '.tmp/' + folderEntry + '/' + folderEntry + '-templates.js';
+        entityPairSrc.push(srcEntry);
+      }
+    }
+    grunt.config('concat.generated.files', configTemplate);
+    if (verboseConfigUpdates) {
+      grunt.log.writeln('Config -->' + JSON.stringify(grunt.config('concat')));
+    }
+
+  });
+
 };

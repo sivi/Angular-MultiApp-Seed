@@ -223,7 +223,6 @@ module.exports = function (grunt) {
     ngtemplates: {
       // see GruntFiles/configs/gruntConfigNgTemplates.js
     },
-
     // Replace Google CDN references
     cdnify: {
       dist: {
@@ -336,11 +335,21 @@ module.exports = function (grunt) {
     injector: {
       // see GruntFiles/configs/gruntConfigInjector.js
     },
+    concat: {
+    }
   });
   var updateConfig = function(grunt) {
-    grunt.task.run(['ngtemplatesConfig']);
+    grunt.task.run(['copyConfig', 'injectorConfig', 'jadeConfig', 'jshintConfig',
+      'ngtemplatesConfig', 'sassConfig', 'useminPrepareConfig', 'watchConfig', 'wiredepConfig'
+    ]);
   };
   updateConfig(grunt);
+
+  grunt.registerTask('testConfig', function () {
+    grunt.task.run(['useminPrepare', 'useminFixGeneratedConcatConfig', 'templatesFixGeneratedConcatConfig', 'concat']);
+    // grunt.task.run(['useminPrepareConfig', 'useminPrepare', 'useminFixGeneratedConcatConfig', 'templatesFixGeneratedConcatConfig']);
+
+  });
 
   // for tasks see
   //   GruntFiles/tasks/gruntServeTask.js   : 'serve'

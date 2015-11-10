@@ -8,3 +8,4 @@ dist
 client/NotUsed
 /server/config/local.env.js
 npm-debug.log
+a*.txt

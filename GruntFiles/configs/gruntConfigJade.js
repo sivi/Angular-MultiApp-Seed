@@ -2,11 +2,21 @@
  * Created by a on 11/10/2015.
  */
 
-
 'use strict';
 module.exports = function (grunt) {
   grunt.registerTask('jadeConfig', function () {
-    grunt.config('jade', [{
+    var appFolders = grunt.config('projectAppFolders');
+    var verboseConfigUpdates = grunt.config('verboseConfigUpdates');
+
+    var foldersSequenceString = '';
+    for (var i = 0; i < appFolders.length; i++) {
+      if (foldersSequenceString !== '') {
+        foldersSequenceString += ',';
+      }
+      foldersSequenceString += appFolders[i];
+    }
+
+    grunt.config('jade', {
       compile: {
         options: {
           data: {
@@ -17,12 +27,15 @@ module.exports = function (grunt) {
           expand: true,
           cwd: '<%= projectRoot.client %>',
           src: [
-            '{adminApp,editorApp,mainApp,components,shared}/**/*.jade'
+            '{' + foldersSequenceString + ',components,shared}/**/*.jade'
           ],
           dest: '.tmp',
           ext: '.html'
         }]
       }
-    }]);
+    });
+    if (verboseConfigUpdates) {
+      grunt.log.writeln('Config -->' + JSON.stringify(grunt.config('jade')));
+    }
   });
 };

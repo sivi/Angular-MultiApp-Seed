@@ -68,7 +68,7 @@ module.exports = function (grunt) {
       configTemplate.dist.files.push(template);
     }
 
-    grunt.config('copy', [configTemplate]);
+    grunt.config('copy', configTemplate);
     if (verboseConfigUpdates) {
       grunt.log.writeln('Config -->' + JSON.stringify(grunt.config('copy')));
     }

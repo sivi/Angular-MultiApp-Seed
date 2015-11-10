@@ -79,7 +79,7 @@ module.exports = function (grunt) {
 
 
     // Make sure code styles are up to par and there are no obvious mistakes
-    grunt.config('injector', [configTemplate]);
+    grunt.config('injector', configTemplate);
     if (verboseConfigUpdates) {
       grunt.log.writeln('Config -->' + JSON.stringify(grunt.config('injector')));
     }

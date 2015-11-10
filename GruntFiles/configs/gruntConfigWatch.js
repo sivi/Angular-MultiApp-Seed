@@ -5,20 +5,30 @@
 'use strict';
 module.exports = function (grunt) {
   grunt.registerTask('watchConfig', function () {
-    grunt.config('watch', [{
+    var appFolders = grunt.config('projectAppFolders');
+    var verboseConfigUpdates = grunt.config('verboseConfigUpdates');
+    var foldersSequenceString = '';
+    for (var i = 0; i < appFolders.length; i++) {
+      if (foldersSequenceString !== '') {
+        foldersSequenceString += ',';
+      }
+      foldersSequenceString += appFolders[i];
+    }
+
+    var configTemplate = {
       injectJS: {
         files: [
-          '<%= projectRoot.client %>/{adminApp,editorApp,mainApp,components,shared}/**/*.js',
-          '!<%= projectRoot.client %>/{adminApp,editorApp,mainApp,components,shared}/**/*.spec.js',
-          '!<%= projectRoot.client %>/{adminApp,editorApp,mainApp,components,shared}/**/*.mock.js',
-          '!<%= projectRoot.client %>/adminApp/app.js',
-          '!<%= projectRoot.client %>/editorApp/app.js',
-          '!<%= projectRoot.client %>/mainApp/app.js'],
+          '<%= projectRoot.client %>/{' + foldersSequenceString + ',components,shared}/**/*.js',
+          '!<%= projectRoot.client %>/{' + foldersSequenceString +
+          ',components,shared}/**/*.spec.js',
+          '!<%= projectRoot.client %>/{' + foldersSequenceString +
+          ',components,shared}/**/*.mock.js'
+        ],
         tasks: ['injector:scripts']
       },
       injectCss: {
         files: [
-          '<%= projectRoot.client %>/{adminApp,editorApp,mainApp,components}/**/*.css'
+          '<%= projectRoot.client %>/{' + foldersSequenceString + ',components}/**/*.css'
         ],
         tasks: ['injector:css']
       },
@@ -28,25 +38,25 @@ module.exports = function (grunt) {
       },
       jsTest: {
         files: [
-          '<%= projectRoot.client %>/{adminApp,editorApp,mainApp,components}/**/*.spec.js',
-          '<%= projectRoot.client %>/{adminApp,editorApp,mainApp,components}/**/*.mock.js'
+          '<%= projectRoot.client %>/{' + foldersSequenceString + ',components}/**/*.spec.js',
+          '<%= projectRoot.client %>/{' + foldersSequenceString + ',components}/**/*.mock.js'
         ],
         tasks: ['newer:jshint:all', 'karma']
       },
       injectSass: {
         files: [
-          '<%= projectRoot.client %>/{adminApp,editorApp,mainApp,components}/**/*.{scss,sass}'],
+          '<%= projectRoot.client %>/{' + foldersSequenceString + ',components}/**/*.{scss,sass}'],
         tasks: ['injector:sass']
       },
       sass: {
         files: [
-          '<%= projectRoot.client %>/{adminApp,editorApp,mainApp,components}/**/*.{scss,sass}'],
+          '<%= projectRoot.client %>/{' + foldersSequenceString + ',components}/**/*.{scss,sass}'],
         tasks: ['sass', 'autoprefixer']
       },
       jade: {
         files: [
-          '<%= projectRoot.client %>/{adminApp,editorApp,mainApp,components,shared}/*',
-          '<%= projectRoot.client %>/{adminApp,editorApp,mainApp,components,shared}/**/*.jade'],
+          '<%= projectRoot.client %>/{' + foldersSequenceString + ',components,shared}/*',
+          '<%= projectRoot.client %>/{' + foldersSequenceString + ',components,shared}/**/*.jade'],
         tasks: ['jade']
       },
       gruntfile: {
@@ -54,13 +64,15 @@ module.exports = function (grunt) {
       },
       livereload: {
         files: [
-          '{.tmp,<%= projectRoot.client %>}/{adminApp,editorApp,mainApp,components}/**/*.css',
-          '{.tmp,<%= projectRoot.client %>}/{adminApp,editorApp,mainApp,components}/**/*.html',
+          '{.tmp,<%= projectRoot.client %>}/{' + foldersSequenceString + ',components}/**/*.css',
+          '{.tmp,<%= projectRoot.client %>}/{' + foldersSequenceString + ',components}/**/*.html',
 
-          '{.tmp,<%= projectRoot.client %>}/{adminApp,editorApp,mainApp,components}/**/*.js',
+          '{.tmp,<%= projectRoot.client %>}/{' + foldersSequenceString + ',components}/**/*.js',
 
-          '!{.tmp,<%= projectRoot.client %>}{adminApp,editorApp,mainApp,components}/**/*.spec.js',
-          '!{.tmp,<%= projectRoot.client %>}/{adminApp,editorApp,mainApp,components}/**/*.mock.js',
+          '!{.tmp,<%= projectRoot.client %>}{' + foldersSequenceString +
+          ',components}/**/*.spec.js',
+          '!{.tmp,<%= projectRoot.client %>}/{' + foldersSequenceString +
+          ',components}/**/*.mock.js',
           '<%= projectRoot.client %>/assets/images/{,*//*}*.{png,jpg,jpeg,gif,webp,svg}'
         ],
         options: {
@@ -77,6 +89,11 @@ module.exports = function (grunt) {
           nospawn: true //Without this option specified express won't be reloaded
         }
       }
-    }]);
+    };
+
+    grunt.config('watch', configTemplate);
+    if (verboseConfigUpdates) {
+      grunt.log.writeln('Config -->' + JSON.stringify(grunt.config('watch')));
+    }
   });
 };
