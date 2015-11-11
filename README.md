@@ -1,6 +1,6 @@
 # README #
 
-Framework for multiple client side AngularJS applications (as opposed to hallowed single app commitment of AngularJS team) with single NodeJS app on server side with Grunt build framework. Reworked from yeoman:angular-fullstack-generator generated project.
+Framework for multiple client side AngularJS applications (as opposed to hallowed single app commitment of AngularJS team) with single NodeJS app on server side with Grunt build framework. Reworked from yeoman:angular-fullstack-generator generated project: ExpressJS(v.4) router, Passport user authentication (local, Google, Facebook, Twitter)
 
 
  Version: 0.0.1
@@ -28,22 +28,22 @@ Mongo 3.x with mongoose
   folder structure is expected to be following
          
      /  (root folder: package.json, Gruntfile.js, . . .)                                                       
-     |-/client                                                 
-     |-/assets                                                 
-     |-/components                                             
-     |-/shared                                                 
-     |-/server                                                 
      |-/GruntFiles                                             
-     |-/app1-folder (names to be set in Gruntfile.js !!!)      
-     | |-index.html                                            
-     | |-app.js                                                
-     | |-/app1-application-subfolder1                          
-     | |-/app1-application-subfolder2                          
-     | |      .                                                   
-     | |      .                                                  
-     | |      .                                                 
-     |-/app2-folder                                            
-     |-/app3-folder                                            
+     |-/server                                                 
+     |-/client                                                 
+     | |-/assets                                                 
+     | |-/components                                             
+     | |-/shared                                                 
+     | |-/app1-folder (names to be set in Gruntfile.js !!!)      
+     | | |-index.html                                            
+     | | |-app.js                                                
+     | | |-/app1-application-subfolder1                          
+     | | |-/app1-application-subfolder2                          
+     | | |      .                                                   
+     | | |      .                                                  
+     | | |      .                                                 
+     | |-/app2-folder                                            
+     | |-/app3-folder                                            
          .                                                     
          .                                                     
          .                                                     
@@ -54,3 +54,6 @@ Mongo 3.x with mongoose
 Build configuration is split among multiple files: Gruntfile.js at project root, and files under GruntFiles folder. "configs" contains editing of configuration, "tasks" editing of tasks definitions. There are some cheating tasks which modify configuration in runtime since "**useminPrepare**" does not permit multiple apps, and does not permit app.js to be located anywhere except client root. Similar problem is with "**ngTemplates**" task.
 
 Each app after build will contain all bower components unless you exclude "wiredep" task.
+
+Client folder contains client side (AngularJS)
+Server folder contains server side (NodeJS). 
