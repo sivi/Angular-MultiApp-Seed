@@ -8,6 +8,7 @@ module.exports = function (grunt) {
 
     var appFolders = grunt.config('projectAppFolders');
     var verboseConfigUpdates = grunt.config('verboseConfigUpdates');
+    var runImageMin = grunt.config('runImageMin');
 
     var foldersSequenceString = '';
     for (var i = 0; i < appFolders.length; i++) {
@@ -45,7 +46,8 @@ module.exports = function (grunt) {
               'package.json',
               'server/**/*'
             ]
-          }]
+          }
+        ]
       },
       styles: {
         expand: true,
@@ -59,12 +61,22 @@ module.exports = function (grunt) {
       var template = {
         expand: true,
         dot: true,
-        cwd: '<%= projectRoot.client %>/' + appFolders[i] + ' /',
+        cwd: '<%= projectRoot.client %>/' + appFolders[i] + '/',
         dest: '<%= projectRoot.dist %>/public/' + appFolders[i] + '/',
         src: [
           'index.html'
         ]
       };
+      configTemplate.dist.files.push(template);
+    }
+    // copy images
+    if (!runImageMin) {
+      template = {
+        expand: true,
+        cwd: '<%= projectRoot.client %>/assets/images',
+        src: '{,*/}*.{png,jpg,jpeg,gif}',
+        dest: '<%= projectRoot.dist %>/public/assets/images'
+      }
       configTemplate.dist.files.push(template);
     }
 

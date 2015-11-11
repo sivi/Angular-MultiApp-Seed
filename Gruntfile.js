@@ -4,6 +4,7 @@
 module.exports = function (grunt) {
 
   var appFolders = ['adminApp', 'editorApp', 'mainApp'];
+  var runImageMin = false;
   // turn on if dump of updates is requiered
   var verboseConfigUpdates = true;
 
@@ -41,7 +42,8 @@ module.exports = function (grunt) {
       dist: 'dist'
     },
     projectAppFolders: appFolders,
-    verboseConfigUpdates:verboseConfigUpdates,
+    verboseConfigUpdates: verboseConfigUpdates,
+    runImageMin: runImageMin,
     express: {
       options: {
         port: process.env.PORT || 9000
@@ -259,29 +261,7 @@ module.exports = function (grunt) {
 
     // Run some tasks in parallel to speed up the build process
     concurrent: {
-      server: [
-        'jade',
-        'sass'
-      ],
-      test: [
-        'jade',
-        'sass'
-      ],
-      debug: {
-        tasks: [
-          'nodemon',
-          'node-inspector'
-        ],
-        options: {
-          logConcurrentOutput: true
-        }
-      },
-      dist: [
-        'jade',
-        'sass',
-        //'imagemin',
-        'svgmin'
-      ]
+      // see GruntFiles/configs/gruntConfigConcurent.js
     },
 
     // Test settings
@@ -340,13 +320,15 @@ module.exports = function (grunt) {
   });
   var updateConfig = function(grunt) {
     grunt.task.run(['copyConfig', 'injectorConfig', 'jadeConfig', 'jshintConfig',
-      'ngtemplatesConfig', 'sassConfig', 'useminPrepareConfig', 'watchConfig', 'wiredepConfig'
+      'concurentConfig', 'ngtemplatesConfig', 'sassConfig', 'useminPrepareConfig',
+      'watchConfig', 'wiredepConfig'
     ]);
   };
   updateConfig(grunt);
 
   grunt.registerTask('testConfig', function () {
-    grunt.task.run(['useminPrepare', 'useminFixGeneratedConcatConfig', 'templatesFixGeneratedConcatConfig', 'concat']);
+    grunt.task.run(['useminPrepare', 'useminFixGeneratedConcatConfig',
+      'templatesFixGeneratedConcatConfig', 'concat']);
     // grunt.task.run(['useminPrepareConfig', 'useminPrepare', 'useminFixGeneratedConcatConfig', 'templatesFixGeneratedConcatConfig']);
 
   });

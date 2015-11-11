@@ -28,7 +28,8 @@ module.exports = function (grunt) {
       var propertyName = appFolders[i] + 'Main';
       var template = {
         cwd: '<%= projectRoot.client %>',
-        src: ['{' + appFolders[i] + ',components,shared}/**/*.html'],
+        // NOTE: index.html MUST be excluded, otherwise usemin anihilates content of app.js !!!
+        src: ['{' + appFolders[i] + ',components,shared}/**/*.html!index.html'],
         dest: '.tmp/' + appFolders[i] + '/' + appFolders[i] + '-templates.js',
         usemin: appFolders[i] + '/app.js'
       };
