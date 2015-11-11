@@ -14,7 +14,6 @@ though, at present it will end up in node_modules/build-test/ folder. Move it fr
 
 Or simply, download zip and unpack.
 
-Configuration
 Open Gruntfile.js and edit values of "appFolders". These are names of your apps or at least names of folders that contain single app each.
 
 ## Dependencies
