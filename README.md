@@ -32,25 +32,25 @@ Mongo 3.x with mongoose
 
  Deployment instructions
   folder structure is expected to be following
->>    /                                                     
->>>    |-/client                                             
->>>    |-/assets                                           
->>>    |-/components                                       
->>>    |-/shared                                           
->>>    |-/app1-folder (names to be set in Gruntfile.js !!!)
+>    /                                                     
+>>    |-/client                                             
+>>    |-/assets                                           
+>>    |-/components                                       
+>>    |-/shared                                           
+>>    |-/server                                             
+>>    |-Gruntfiles                                          
+>>    |-/app1-folder (names to be set in Gruntfile.js !!!)
 >>>      |-index.html                                      
 >>>      |-app.js                                          
 >>>      |-/app1-application-subfolder1                    
 >>>      |-/app1-application-subfolder2                    
-           .                                              
-           .                                              
-           .                                              
-      |-/app2-folder                                      
-      |-/app3-folder                                      
-        .                                                 
-        .                                                 
-        .                                                 
-    |-/server                                             
-    |-Gruntfiles                                          
+>>>           .                                              
+>>>           .                                              
+>>>           .                                              
+>>    |-/app2-folder                                      
+>>    |-/app3-folder                                      
+>>      .                                                 
+>>      .                                                 
+>>      .                                                 
 
   *NOTE*
