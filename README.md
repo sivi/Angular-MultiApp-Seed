@@ -4,15 +4,13 @@ Framework for multiple client side AngularJS applications (as opposed to hallowe
 
 ### What is this repository for? ###
 
-* Quick summary
+ Version: 0.0.1
 
-* Version: 0.0.1
-
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+ [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
 
 ### How do I get set up? ###
 
-* Summary of set up
+Summary of set up
 
 One possibility is using npm
 - npm install angular-multiapp-seed
@@ -21,19 +19,19 @@ though, at present it will end up in node_modules/build-test/ folder. Move it fr
 
 Or simply, download zip and unpack.
 
-* Configuration
+Configuration
 Open Gruntfile.js and edit values of "appFolders". These are names of your apps or at least names of folders that contain single app each.
 
-* Dependencies
+Dependencies
 Minimal set AngularJS/NodeJS dependencies (24 of them) + development dependencies (57 of them). Run "npm install" in root folder.
 
-* Database configuration
+ Database configuration
 Mongo 3.x with mongoose
 
-* How to run tests
+ How to run tests
 
-* Deployment instructions
-folder structure is expected to be following
+ Deployment instructions
+  folder structure is expected to be following
     /                                                     
     |-/client                                             
       |-/assets                                           
