@@ -68,6 +68,12 @@ module.exports = function(config) {
     // if true, it capture browsers, run tests and exit
     singleRun: false
   };
+  //
+  //  NOTE:
+  //        order of search/import of files is ESSENTIALY important
+  //        otherwise tests cannot run. Order must follow those in
+  //        index.html files !!!
+  //
   var entry;
   for (var i = 0; i < appFolders.length; i++) {
     entry = 'client/' + appFolders[i] + '/app.js';
