@@ -1,17 +1,22 @@
-'use strict';
+(function() {
+  'use strict';
 
-angular.module('buildTestApp')
-  .controller('EditorMainCtrl', function ($scope, $http) {
+  angular.module('buildTestApp').
+    controller('EditorMainCtrl', EditorMainCtrl);
+
+  EditorMainCtrl.$inject = ['$scope', '$http'];
+
+  function EditorMainCtrl($scope, $http) {
     $scope.awesomeThings = [];
 
     console.log('EditorMainCtrl constructor');
 
-    $http.get('/api/things').success(function(awesomeThings) {
+    $http.get('/api/things').success(function (awesomeThings) {
       $scope.awesomeThings = awesomeThings;
       //socket.syncUpdates('thing', $scope.awesomeThings);
     });
 
-    $scope.addThing = function() {
+    $scope.addThing = function () {
       if ($scope.newThing === '') {
         return;
       }
@@ -19,11 +24,13 @@ angular.module('buildTestApp')
       $scope.newThing = '';
     };
 
-    $scope.deleteThing = function(thing) {
+    $scope.deleteThing = function (thing) {
       $http.delete('/api/things/' + thing._id);
     };
 
     $scope.$on('$destroy', function () {
       //socket.unsyncUpdates('thing');
     });
-  });
+  }
+
+})();

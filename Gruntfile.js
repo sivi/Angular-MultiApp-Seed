@@ -6,7 +6,7 @@ module.exports = function (grunt) {
   var appFolders = ['adminApp', 'editorApp', 'mainApp'];
   var runImageMin = false;
   // turn on if dump of updates is requiered
-  var verboseConfigUpdates = true;
+  var verboseConfigUpdates = false;
 
   grunt.task.loadTasks('./GruntFiles/configs');
   grunt.task.loadTasks('./GruntFiles/tasks');

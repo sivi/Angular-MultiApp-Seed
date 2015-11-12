@@ -4,9 +4,9 @@ describe('Controller: EditorMainCtrl', function () {
 
   // load the controller's module
   beforeEach(module('buildTestApp'));
-  beforeEach(module('socketMock'));
+  //beforeEach(module('socketMock'));
 
-  var MainCtrl,
+  var EditorMainCtrl,
       scope,
       $httpBackend;
 
@@ -17,7 +17,7 @@ describe('Controller: EditorMainCtrl', function () {
       .respond(['HTML5 Boilerplate', 'AngularJS', 'Karma', 'Express']);
 
     scope = $rootScope.$new();
-    MainCtrl = $controller('MainCtrl', {
+    EditorMainCtrl = $controller('EditorMainCtrl', {
       $scope: scope
     });
   }));
