@@ -4,13 +4,16 @@
    Editor App
    */
 
-  angular.module('buildTestApp', [
+  angular.module('editorApp', [
     'ngCookies',
     'ngResource',
     'ngSanitize',
-    'ngRoute']);
+    'ngRoute',
+    'componentsModule',
+    'sharedControllers'
+  ]);
 
-  angular.module('buildTestApp').
+  angular.module('editorApp').
     config(function ($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider.
       otherwise({

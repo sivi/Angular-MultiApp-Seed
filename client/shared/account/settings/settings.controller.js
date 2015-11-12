@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('buildTestApp')
+angular.module('sharedControllers')
   .controller('SettingsCtrl', function ($scope, User, Auth) {
     $scope.errors = {};
 

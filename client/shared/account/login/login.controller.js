@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('buildTestApp')
+angular.module('sharedControllers')
   .controller('LoginCtrl', function ($scope, Auth, $location, $window) {
     $scope.user = {};
     $scope.errors = {};

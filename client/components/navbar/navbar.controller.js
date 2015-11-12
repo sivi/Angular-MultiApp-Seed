@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('buildTestApp')
+angular.module('componentsModule')
   .controller('NavbarCtrl', function ($scope, $location, Auth, $window) {
     var vm = this;
     var host = window.location.protocol;

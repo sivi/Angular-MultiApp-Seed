@@ -3,14 +3,16 @@
   /*
       Admin App
    */
-  angular.module('buildTestApp', [
+  angular.module('administrationApp', [
    'ngCookies',
    'ngResource',
    'ngSanitize',
-   'ngRoute'
+   'ngRoute',
+   'sharedControllers',
+   'componentsModule'
  ]);
 
-  angular.module('buildTestApp').
+  angular.module('administrationApp').
     config(function ($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider.
       otherwise({

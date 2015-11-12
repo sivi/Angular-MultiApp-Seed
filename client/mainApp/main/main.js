@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('buildTestApp')
+angular.module('mainApp')
   .config(function ($routeProvider) {
     $routeProvider
       .when('/mainApp', {

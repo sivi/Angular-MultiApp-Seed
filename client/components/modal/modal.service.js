@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('buildTestApp')
+angular.module('componentsModule')
   .factory('Modal', function ($rootScope, $modal) {
     /**
      * Opens a modal

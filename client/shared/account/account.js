@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('buildTestApp')
+angular.module('sharedControllers')
   .config(function ($routeProvider) {
     $routeProvider
       .when('/login', {

@@ -72,6 +72,31 @@ module.exports = function(config) {
   for (var i = 0; i < appFolders.length; i++) {
     entry = 'client/' + appFolders[i] + '/app.js';
     configTemplate.files.push(entry);
+  }
+  entry = 'client/components/componentsModule.js';
+  configTemplate.files.push(entry);
+  entry = 'client/shared/sharedControllers.js';
+  configTemplate.files.push(entry);
+
+  entry = 'client/components/**/*.js';
+  configTemplate.files.push(entry);
+  entry = 'client/components/**/*.coffee';
+  configTemplate.files.push(entry);
+  entry = 'client/components/**/*.jade';
+  configTemplate.files.push(entry);
+  entry = 'client/components/**/*.html';
+  configTemplate.files.push(entry);
+
+  entry = 'client/shared/**/*.js';
+  configTemplate.files.push(entry);
+  entry = 'client/shared/**/*.coffee';
+  configTemplate.files.push(entry);
+  entry = 'client/shared/**/*.jade';
+  configTemplate.files.push(entry);
+  entry = 'client/shared/**/*.html';
+  configTemplate.files.push(entry);
+
+  for (var i = 0; i < appFolders.length; i++) {
     entry = 'client/' + appFolders[i] + '/app.coffee';
     configTemplate.files.push(entry);
     entry = 'client/' + appFolders[i] + '/**/*.js';
@@ -83,14 +108,6 @@ module.exports = function(config) {
     entry = 'client/' + appFolders[i] + '/**/*.html';
     configTemplate.files.push(entry);
   }
-  entry = 'client/components/**/*.js';
-  configTemplate.files.push(entry);
-  entry = 'client/components/**/*.coffee';
-  configTemplate.files.push(entry);
-  entry = 'client/components/**/*.jade';
-  configTemplate.files.push(entry);
-  entry = 'client/components/**/*.html';
-  configTemplate.files.push(entry);
 
   config.set(configTemplate);
 };

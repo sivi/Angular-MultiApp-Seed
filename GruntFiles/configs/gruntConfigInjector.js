@@ -62,6 +62,7 @@ module.exports = function (grunt) {
       configTemplate.scripts.files['<%= projectRoot.client %>/' + appFolders[i] + '/index.html'] =
         [
           '{.tmp,<%= projectRoot.client %>}/{' + appFolders[i] + ',components}/**/*.js',
+          '!{.tmp,<%= projectRoot.client %>}/components/componentsModule.js',
           '!{.tmp,<%= projectRoot.client %>}/' + appFolders[i] + '/app.js',
           '!{.tmp,<%= projectRoot.client %>}/{' + appFolders[i] + ',components}/**/*.spec.js',
           '!{.tmp,<%= projectRoot.client %>}/{' + appFolders[i] + ',components}/**/*.mock.js'

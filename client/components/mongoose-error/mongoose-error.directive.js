@@ -3,7 +3,7 @@
 /**
  * Removes server error when user updates input
  */
-angular.module('buildTestApp')
+angular.module('componentsModule')
   .directive('mongooseError', function () {
     return {
       restrict: 'A',

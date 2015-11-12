@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  angular.module('buildTestApp').
+  angular.module('editorApp').
     controller('EditorMainCtrl', EditorMainCtrl);
 
   EditorMainCtrl.$inject = ['$scope', '$http'];

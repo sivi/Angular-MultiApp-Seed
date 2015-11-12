@@ -4,14 +4,16 @@
    Main App
    */
 
-  angular.module('buildTestApp', [
+  angular.module('mainApp', [
     'ngCookies',
     'ngResource',
     'ngSanitize',
-    'ngRoute'
+    'ngRoute',
+    'componentsModule',
+    'sharedControllers'
   ]);
 
-  angular.module('buildTestApp').
+  angular.module('mainApp').
     config(function ($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider.
       otherwise({

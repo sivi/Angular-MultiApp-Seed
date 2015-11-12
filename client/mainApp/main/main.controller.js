@@ -1,9 +1,11 @@
 (function() {
   'use strict';
 
-  angular.module('buildTestApp')
+  angular.module('mainApp')
     .controller('MainCtrl', MainCtrl);
+
   MainCtrl.$inject = ['$scope', '$http'];
+
   function MainCtrl($scope, $http) {
       $scope.awesomeThings = [];
 

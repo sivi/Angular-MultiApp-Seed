@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('buildTestApp')
+angular.module('editorApp')
   .config(function ($routeProvider) {
     $routeProvider
       .when('/editorApp', {

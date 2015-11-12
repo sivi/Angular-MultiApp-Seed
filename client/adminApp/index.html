@@ -21,7 +21,7 @@
       <!-- endinjector -->
     <!-- endbuild -->
   </head>
-  <body ng-app="buildTestApp">
+  <body ng-app="administrationApp">
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -62,6 +62,8 @@
         <!-- build:js({.tmp,client}) adminApp/app.js -->
 
         <script src="adminApp/app.js"></script>
+        <script src="shared/sharedControllers.js"></script>
+        <script src="components/componentsModule.js"></script>
         <script src="shared/account/account.js"></script>
         <script src="shared/account/login/login.controller.js"></script>
         <script src="shared/account/settings/settings.controller.js"></script>
