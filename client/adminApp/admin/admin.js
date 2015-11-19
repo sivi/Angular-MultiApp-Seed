@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('administrationApp')
+angular.module('adminApp')
   .config(function ($routeProvider) {
     $routeProvider
       .when('/adminApp', {

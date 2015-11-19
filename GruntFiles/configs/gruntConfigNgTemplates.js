@@ -12,7 +12,7 @@ module.exports = function (grunt) {
     var configTemplate = {
       options: {
         // This should be the name of your apps angular module
-        module: 'buildTestApp',
+        //module: 'buildTestApp',
         htmlmin: {
           collapseBooleanAttributes: true,
           collapseWhitespace: true,
@@ -35,7 +35,8 @@ module.exports = function (grunt) {
       };
       configTemplate[propertyName] = template;
 
-      propertyName = appFolders[i] + 'Tmp';
+      //propertyName = appFolders[i] + 'Tmp';
+      propertyName = appFolders[i];
       template = {
         cwd: '.tmp',
         src: ['{' + appFolders[i] + ',components,shared}/**/*.html'],

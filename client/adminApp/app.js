@@ -3,7 +3,7 @@
   /*
       Admin App
    */
-  angular.module('administrationApp', [
+  angular.module('adminApp', [
    'ngCookies',
    'ngResource',
    'ngSanitize',
@@ -12,7 +12,7 @@
    'componentsModule'
  ]);
 
-  angular.module('administrationApp').
+  angular.module('adminApp').
     config(function ($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider.
       otherwise({

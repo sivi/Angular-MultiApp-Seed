@@ -1,10 +1,12 @@
 'use strict';
 
-angular.module('administrationApp')
+angular.module('adminApp')
   .controller('AdminCtrl', function ($scope, $http, Auth, User) {
 
     // Use the User $resource to fetch all users
     $scope.users = User.query();
+
+    console.log('AdminCtrl');
 
     $scope.delete = function(user) {
       User.remove({ id: user._id });
