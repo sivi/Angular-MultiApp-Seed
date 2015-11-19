@@ -51,6 +51,9 @@ Mongo 3.x with mongoose
   **NOTE**
    Each application folder contains **index.html** and **app.js** (literally named so). If you prefer different names or positions, you need to edit Gruntfile.js and entire set of files in Gruntfiles/configs/ folder. Not a small feat, though.
 
+  **NOTE**
+    Application folder names **MUST** be identical to the names of applications' main modules. Otherwise result of the build does not work! 
+    
 Build configuration is split among multiple files: Gruntfile.js at project root, and files under GruntFiles folder. "configs" contains editing of configuration, "tasks" editing of tasks definitions. There are some cheating tasks which modify configuration in runtime since "**useminPrepare**" does not permit multiple apps, and does not permit app.js to be located anywhere except client root. Similar problem is with "**ngTemplates**" task.
 
 Each app after build will contain all bower components unless you exclude "wiredep" task.
