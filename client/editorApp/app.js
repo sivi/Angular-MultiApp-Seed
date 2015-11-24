@@ -10,7 +10,10 @@
     'ngSanitize',
     'ngRoute',
     'componentsModule',
-    'sharedControllers'
+    'sharedControllers',
+    'starRatingDirectiveModule',
+    'textAngular',
+    'SurveyCreatorDirective'
   ]);
 
   angular.module('editorApp').
@@ -29,6 +32,7 @@
             window.location.replace(window.location.protocol + '/mainApp');
           }
           else {
+            console.log('REROUTING');
             window.location.replace('/');
           }
         },

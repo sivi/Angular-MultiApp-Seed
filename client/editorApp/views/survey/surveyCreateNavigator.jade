@@ -1,0 +1,51 @@
+//
+   Created by a on 11/14/2015.
+
+      //input(type="hidden" name="_csrf" value="{{ csrf_token }}")
+div
+   label() Pages {{pages.length}}
+   input(class="imageToolButton", type="image", id="editSurveyLayoutButton",
+           ng-click="vm.editSurveyLayout()", src="/assets/images/tree_diagramm.png")
+div
+   select(name="pageSelector", id="pageSelector",
+          ng-model="vm.currentPageId", ng-change="vm.pageSelectorChange()",
+          ng-options="page.key for page in vm.selectorPages track by page.surveyPageId")
+          //option(ng-repeat="page in pages", value="{{page.survey_page_id}}") {{page.key}}
+div
+   input(class="imageToolButton", type="image", id="addPageButton",
+         ng-click="vm.addPage()", src="/assets/images/add.png")
+   input(class="imageToolButton", type="image", id="editPageButton",
+         ng-click="vm.editPage()", src="/assets/images/tool.png")
+   input(class="imageToolButton", type="image", id="addPageButton",
+         ng-click="vm.removePage()", src="/assets/images/trash.png")
+div
+   label() Section key
+div
+   select(name="sectionSelector", id="sectionSelector",
+          ng-model="vm.currentSectionId", ng-change="vm.sectionSelectorChange()",
+          ng-options="section.key for section in vm.selectorSections track by section.surveySectionId")
+div
+   input(class="imageToolButton", type="image", id="addSectionButton",
+         ng-click="vm.addSection()", src="/assets/images/add.png")
+   input(class="imageToolButton", type="image", id="editSectionButton",
+         ng-click="vm.editSection()", src="/assets/images/tool.png")
+   input(class="imageToolButton", type="image", id="removeSectionButton",
+         ng-click="vm.removeSection()", src="/assets/images/trash.png")
+div
+   label() Question key
+div
+   select(name="questionSelector", id="questionSelector",
+          ng-model="vm.currentQuestionId", ng-change="vm.questionSelectorChange()",
+          ng-options="question.key for question in vm.selectorQuestions track by question.surveyQuestionId")
+div
+   input(class="imageToolButton", type="image", id="addQuestionButton",
+         ng-click="vm.addQuestion()", src="/assets/images/add.png")
+   input(class="imageToolButton", type="image", id="editQuestionButton",
+         ng-click="vm.editQuestion()", src="/assets/images/tool.png")
+   input(class="imageToolButton", type="image", id="removeQuestionButton",
+         ng-click="vm.removeQuestion()", src="/assets/images/trash.png")
+div(ng-show="currentQuestion !== null")
+   include ./surveyOptionValueUIElements.jade
+div
+    input(type="button", value="Show DB Data preview", ng-click="vm.showDBDataPreview()")
+    input(type="button", value="Save", ng-click="vm.saveSurveyEditing()")

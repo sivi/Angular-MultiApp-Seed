@@ -4,7 +4,7 @@ angular.module('editorApp')
   .config(function ($routeProvider) {
     $routeProvider
       .when('/editorApp', {
-        templateUrl: 'editorApp/editor/editorMain.html',
-        controller: 'EditorMainCtrl'
+        templateUrl: '/editorApp/editor/editorMain.html',
+        controller: 'SurveyEditorMainController'
       });
   });

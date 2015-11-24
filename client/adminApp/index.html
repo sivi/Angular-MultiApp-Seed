@@ -46,9 +46,7 @@
     <![endif]-->
     <!-- build:js({.tmp,client,node_modules}) adminApp/vendor.js -->
       <!-- bower:js -->
-      <script src="../bower_components/es5-shim/es5-shim.js"></script>
       <script src="../bower_components/angular/angular.js"></script>
-      <script src="../bower_components/json3/lib/json3.js"></script>
       <script src="../bower_components/angular-resource/angular-resource.js"></script>
       <script src="../bower_components/angular-cookies/angular-cookies.js"></script>
       <script src="../bower_components/angular-sanitize/angular-sanitize.js"></script>
@@ -71,6 +69,7 @@
           <!-- injector:js -->
           <script src="adminApp/admin/admin.controller.js"></script>
           <script src="adminApp/admin/admin.js"></script>
+          <script src="components/Csrf/Csrf.js"></script>
           <script src="components/auth/auth.service.js"></script>
           <script src="components/auth/user.service.js"></script>
           <script src="components/modal/modal.service.js"></script>

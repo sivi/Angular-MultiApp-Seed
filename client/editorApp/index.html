@@ -12,12 +12,18 @@
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(client) editorApp/vendor.css -->
+    <link rel='stylesheet', href="http://cdnjs.cloudflare.com/ajax/libs/textAngular/1.4.6/textAngular.css", type='text/css'>
+    <link rel='stylesheet', href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css", type='text/css'>
       <!-- bower:css -->
       <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css({.tmp,client}) editorApp/app.css -->
     <link rel="stylesheet" href="editorApp/app.css">
       <!-- injector:css -->
+      <link rel="stylesheet" href="editorApp/css/collapsibleTree.css">
+      <link rel="stylesheet" href="editorApp/css/drag-drop.css">
+      <link rel="stylesheet" href="editorApp/css/starRating.css">
+      <link rel="stylesheet" href="editorApp/css/surveyApp.css">
       <!-- endinjector -->
     <!-- endbuild -->
   </head>
@@ -46,9 +52,7 @@
     <![endif]-->
     <!-- build:js({.tmp,client,node_modules}) editorApp/vendor.js -->
       <!-- bower:js -->
-      <script src="../bower_components/es5-shim/es5-shim.js"></script>
       <script src="../bower_components/angular/angular.js"></script>
-      <script src="../bower_components/json3/lib/json3.js"></script>
       <script src="../bower_components/angular-resource/angular-resource.js"></script>
       <script src="../bower_components/angular-cookies/angular-cookies.js"></script>
       <script src="../bower_components/angular-sanitize/angular-sanitize.js"></script>
@@ -56,6 +60,9 @@
       <script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
       <script src="../bower_components/lodash/dist/lodash.compat.js"></script>
       <!-- endbower -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/textAngular/1.4.6/textAngular-sanitize.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/textAngular/1.4.6/textAngular-rangy.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/textAngular/1.4.6/textAngular.min.js"></script>
     <!-- endbuild -->
 
 
@@ -69,6 +76,7 @@
         <script src="shared/account/settings/settings.controller.js"></script>
         <script src="shared/account/signup/signup.controller.js"></script>
     <!-- injector:js -->
+    <script src="components/Csrf/Csrf.js"></script>
     <script src="components/auth/auth.service.js"></script>
     <script src="components/auth/user.service.js"></script>
     <script src="components/modal/modal.service.js"></script>
@@ -76,6 +84,16 @@
     <script src="components/navbar/navbar.controller.js"></script>
     <script src="editorApp/editor/editorMain.controller.js"></script>
     <script src="editorApp/editor/editorMain.js"></script>
+    <script src="editorApp/js/Survey/SurveyDisplay.js"></script>
+    <script src="editorApp/js/Survey/SurveyDisplayConditionEditor.js"></script>
+    <script src="editorApp/js/Survey/SurveyEditorNavigation.js"></script>
+    <script src="editorApp/js/Survey/SurveyStructureEditor.js"></script>
+    <script src="editorApp/js/Survey/SurveyValueEntryFieldEditor.js"></script>
+    <script src="editorApp/js/Survey/surveyCreateCtrl.js"></script>
+    <script src="editorApp/js/SurveyEditorMainController.js"></script>
+    <script src="editorApp/js/directives/dragAndDropDirective.js"></script>
+    <script src="editorApp/js/directives/starRatingDirective.js"></script>
+    <script src="editorApp/js/directives/surveyCreateDirective.js"></script>
     <!-- endinjector -->
         <!-- endbuild -->
 </body>

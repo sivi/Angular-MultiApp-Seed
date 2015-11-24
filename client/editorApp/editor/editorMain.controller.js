@@ -29,8 +29,15 @@
     };
 
     $scope.$on('$destroy', function () {
+      console.log('DESTROY editorMain');
       //socket.unsyncUpdates('thing');
     });
+
+    $scope.current = 5;
+    $scope.getSelectedRating = function(rating) {
+      alert(rating);
+    };
+
   }
 
 })();
